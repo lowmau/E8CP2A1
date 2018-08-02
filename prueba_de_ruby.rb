@@ -1,3 +1,20 @@
+def alumnos_aprobados(aprob, nota = 5)
+	f = File.open(aprob, 'r')
+		data = f.readlines
+		
+		sum = 0
+		data.each do |alum|
+			alumno = alum.split(", ")
+			alumno.each do |alum2|
+				sum += alum2.to_f
+			end
+			prom = sum / (alumno.count - 1)
+			p alumno[0] if prom >= nota
+			sum = 0
+		end
+		f.close
+end
+
 menu = 0
 while(menu != 4) do
 	puts "Opción 1: Promedio de notas por alumno"
@@ -20,7 +37,7 @@ while(menu != 4) do
 				sum += alum2.to_f
 			end
 			prom = sum / (alumno.count - 1)
-			p "#{alumno[0]} con un promedio de #{prom}"
+			f.write "#{alumno[0]} con un promedio de #{prom}\n"
 			sum = 0
 		end
 		f.close
@@ -43,20 +60,7 @@ while(menu != 4) do
 		end
 		f.close
 	when 3
-		f = File.open('alumnos.csv', 'r')
-		data = f.readlines
-		
-		sum = 0
-		data.each do |alum|
-			alumno = alum.split(", ")
-			alumno.each do |alum2|
-				sum += alum2.to_f
-			end
-			prom = sum / (alumno.count - 1)
-			p alumno[0] if prom >= 5
-			sum = 0
-		end
-		f.close
+		alumnos_aprobados('alumnos.csv')
 	when 4
 	else
 		p 'Opción inválida'
